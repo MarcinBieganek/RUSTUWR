@@ -29,9 +29,28 @@ mod tests {
     use super::*;
     
     #[test]
-    fn returns_expected() {
+    fn good_win_test() {
         assert_eq!(good_vs_evil("0 0 0 0 0 10", "0 0 0 0 0 0 0"), "Battle Result: Good triumphs over Evil");
+    }
+
+    #[test]
+    fn evil_win_test() {
         assert_eq!(good_vs_evil("0 0 0 0 0 0", "0 0 0 0 0 0 10"), "Battle Result: Evil eradicates all trace of Good");
+    }
+
+    #[test]
+    fn tie_test() {
         assert_eq!(good_vs_evil("0 0 0 0 0 10", "0 0 0 0 0 0 10"), "Battle Result: No victor on this battle field");
     }
+
+    #[test]
+    fn one_of_type_test() {
+        assert_eq!(good_vs_evil("1 1 1 1 1 1", "1 1 1 1 1 1 1"), "Battle Result: Evil eradicates all trace of Good");
+    }
+
+    #[test]
+    fn zero_forces_test() {
+        assert_eq!(good_vs_evil("0 0 0 0 0 0", "0 0 0 0 0 0 0"), "Battle Result: No victor on this battle field");
+    }
+
 }
