@@ -1,5 +1,6 @@
 use std::fs::File;
 use std::io::{Error, Write};
+use std::ops::{Add, Sub, Mul, Div};
 
 struct Image {
     width: usize,
@@ -69,7 +70,7 @@ impl Image {
     }
 }
 
-#[derive(PartialEq)]
+#[derive(Debug, PartialEq)]
 struct Complex {
     real: f64,
     img: f64
@@ -127,5 +128,26 @@ fn main() {
 
     println!("pixel color: {:?}", img.get_pixel_color(0, 0));
 
-    img_white.save_to_file("test.ppm");
+    //img_white.save_to_file("test.ppm");
+
+    //=========================================================================================================
+
+    let z = Complex {real: 3.0, img: 5.0};
+    let zz = Complex {real: 7.0, img: 11.0};
+
+    let a = z + zz;
+
+    let z2 = Complex {real: 10.0, img: 7.0};
+    let zz2 = Complex {real: 5.0, img: 4.0};
+
+    let a2 = z2 - zz2;
+
+    let z3 = Complex {real: 5.0, img: 2.0};
+    let zz3 = Complex {real: 3.0, img: -7.0};
+
+    let a3 = z3 * zz3;
+
+    println!("addition : {:?}", a);
+    println!("sub : {:?}", a2);
+    println!("mul : {:?}", a3);
 }
