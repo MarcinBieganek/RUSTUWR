@@ -70,10 +70,16 @@ impl Image {
     }
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 struct Complex {
     real: f64,
     img: f64
+}
+
+impl Complex {
+    fn abs(self) -> f64 {
+        ((self.real * self.real) + (self.img * self.img)).sqrt()
+    }
 }
 
 impl Add for Complex {
@@ -114,6 +120,41 @@ impl Div for Complex {
     }
 }
 
+fn is_stable(c: Complex, number_of_iter: u32) -> bool {
+    let mut z = Complex {real: 0.0, img: 0.0};
+    (0..number_of_iter)
+        .for_each(|i| {
+            z = (z * z) + c;
+        });
+    z.abs() <= 2.0
+}
+
+fn fractal(n: usize) -> Image {
+    let mut fract = Image::new_white(n, n);
+
+    let vals: Vec<f64> = (-(n as i32 / 2 )..(n as i32/2))
+        .map(|i| {
+            f64::from(i as u32) * 0.05
+        })
+        .collect();
+    
+    vals
+        .iter()
+        .enumerate()
+        .for_each(|(i, re)| {
+            vals
+                .iter()
+                .enumerate()
+                .for_each(|(j, im)| {
+                    if is_stable(Complex {real: *re, img: *im}, 8) {
+                        fract.change_pixel_color(i, j, (0, 0, 0));
+                    }
+                })
+        });
+
+    fract
+}
+
 fn main() {
     let mut img = Image::new(2, 2, vec![vec![(1, 2, 3), (4, 5, 6)], vec![(7, 8, 9), (10, 11, 12)]]);
 
@@ -150,4 +191,10 @@ fn main() {
     println!("addition : {:?}", a);
     println!("sub : {:?}", a2);
     println!("mul : {:?}", a3);
+
+    //=====================================================================================================
+
+
+    let f = fractal(100);
+    f.save_to_file("fractal.ppm"); 
 }
