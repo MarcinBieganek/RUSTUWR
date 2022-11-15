@@ -101,6 +101,17 @@ impl Mul for Complex {
     }
 }
 
+impl Div for Complex {
+    type Output = Self;
+
+    fn div(self, other: Self) -> Self {
+        Self { 
+            real: ((self.real * other.real) + (self.img * other.img)) / ((other.real * other.real) + (other.img * other.img)),
+            img: ((self.img * other.real) - (self.real * other.img)) / ((other.real * other.real) + (other.img * other.img))
+        }
+    }
+}
+
 fn main() {
     let mut img = Image::new(2, 2, vec![vec![(1, 2, 3), (4, 5, 6)], vec![(7, 8, 9), (10, 11, 12)]]);
 
