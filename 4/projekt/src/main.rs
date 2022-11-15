@@ -69,6 +69,19 @@ impl Image {
     }
 }
 
+struct Complex {
+    real: f64,
+    img: f64
+}
+
+impl Add for Complex {
+    type Output = Self;
+
+    fn add(self, other: Self) -> Self {
+        Self { real: self.real + other.real, img: self.img + other.img}
+    }
+}
+
 fn main() {
     let mut img = Image::new(2, 2, vec![vec![(1, 2, 3), (4, 5, 6)], vec![(7, 8, 9), (10, 11, 12)]]);
 
