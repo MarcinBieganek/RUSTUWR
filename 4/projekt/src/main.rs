@@ -6,6 +6,14 @@ struct Image {
 }
 
 impl Image {
+    fn new_white(width: u32, height: u32) -> Image {
+        Image {
+            width: width,
+            height: height,
+            pixels: vec![vec![(255, 255, 255); width as usize]; height as usize]
+        }
+    }
+
     fn new(width: u32, height: u32, pixels: Vec<Vec<(u8, u8, u8)>>) -> Image {
         if pixels.len() != (height as usize) {
             panic!("Tried to create Image with wrong height input!");
@@ -23,12 +31,19 @@ impl Image {
             pixels: pixels
         }
     }
+
+    fn print(&self) {
+        println!("IMG width: {}", self.width);
+        println!("IMG height: {}", self.height);
+        println!("IMG content: {:?}", self.pixels);
+    }
 }
 
 fn main() {
     let img = Image::new(2, 2, vec![vec![(1, 2, 3), (4, 5, 6)], vec![(7, 8, 9), (10, 11, 12)]]);
 
-    println!("IMG width: {}", img.width);
-    println!("IMG height: {}", img.height);
-    println!("IMG content: {:?}", img.pixels);
+    let img_white = Image::new_white(2, 2);
+
+    img.print();
+    img_white.print();
 }
