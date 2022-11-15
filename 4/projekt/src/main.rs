@@ -69,6 +69,7 @@ impl Image {
     }
 }
 
+#[derive(PartialEq)]
 struct Complex {
     real: f64,
     img: f64
