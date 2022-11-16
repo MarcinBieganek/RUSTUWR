@@ -51,9 +51,11 @@ impl Image {
 
     fn save_to_file(&self, file_name: &str) -> Result<(), Error> {
         let mut file = File::create(file_name)?;
-        writeln!(file, "P6")?;
-        writeln!(file, "{}", format!("{} {}", self.width, self.height))?;
-        writeln!(file, "255")?;
+
+        let header = format!("P6 {} {} 255\n", self.width, self.height);
+        file.write(header.as_bytes())?;
+
+        let mut d: Vec<u8> = vec![0; 0];
 
         self.pixels
             .iter()
@@ -61,10 +63,13 @@ impl Image {
                 row
                     .iter()
                     .for_each(|pixel: &(u8, u8, u8)| {
-                        write!(file, "{}", format!("{} {} {} ", pixel.0, pixel.1, pixel.2));
+                        d.push(pixel.0);
+                        d.push(pixel.1);
+                        d.push(pixel.2);
                     });
-                writeln!(file, "");
             });
+        
+        file.write(&d)?;
 
         Ok(())
     }
@@ -134,7 +139,7 @@ fn fractal(n: usize) -> Image {
 
     let vals: Vec<f64> = (-(n as i32 / 2 )..(n as i32/2))
         .map(|i| {
-            f64::from(i as u32) * 0.05
+            f64::from(i as i32) * 0.01
         })
         .collect();
     
@@ -146,7 +151,7 @@ fn fractal(n: usize) -> Image {
                 .iter()
                 .enumerate()
                 .for_each(|(j, im)| {
-                    if is_stable(Complex {real: *re, img: *im}, 8) {
+                    if is_stable(Complex {real: *re, img: *im}, 30) {
                         fract.change_pixel_color(i, j, (0, 0, 0));
                     }
                 })
@@ -169,7 +174,7 @@ fn main() {
 
     println!("pixel color: {:?}", img.get_pixel_color(0, 0));
 
-    //img_white.save_to_file("test.ppm");
+    img_white.save_to_file("test.ppm");
 
     //=========================================================================================================
 
@@ -195,6 +200,6 @@ fn main() {
     //=====================================================================================================
 
 
-    let f = fractal(100);
+    let f = fractal(1000);
     f.save_to_file("fractal.ppm"); 
 }
