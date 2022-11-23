@@ -1,18 +1,40 @@
 fn spin_words(words: &str) -> String {
-    todo!()
+    words.split_whitespace()
+        .map(|s| {
+            if s.len() >= 5 {
+                return s.chars().rev().collect::<String>();
+            };
+            s.to_string()
+        })
+        .collect::<Vec<String>>()
+        .join(" ")
 }
 
 mod tests {
     use super::*;
     
     #[test]
-    fn examples() {
+    fn simple() {
         assert_eq!(spin_words("Welcome"), "emocleW");
+    }
+
+    #[test]
+    fn mixed() {
         assert_eq!(spin_words("Hey fellow warriors"), "Hey wollef sroirraw");
+    }
+
+    #[test]
+    fn none() {
         assert_eq!(spin_words("This is a test"), "This is a test");
-        assert_eq!(spin_words("This is another test"), "This is rehtona test");
+    }
+
+    #[test]
+    fn longer() {
         assert_eq!(spin_words("You are almost to the last test"), "You are tsomla to the last test");
-        assert_eq!(spin_words("Just kidding there is still one more"), "Just gniddik ereht is llits one more");
+    }
+
+    #[test]
+    fn only_first() {
         assert_eq!(spin_words("Seriously this is the last one"), "ylsuoireS this is the last one");
     }
 
