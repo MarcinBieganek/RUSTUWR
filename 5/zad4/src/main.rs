@@ -20,9 +20,27 @@ mod tests {
     use super::*;
 
     #[test]
-    fn examples() {
+    fn first_test() {
         assert_eq!(expanded_form(12), "10 + 2");
+    }
+
+    #[test]
+    fn second_test() {
         assert_eq!(expanded_form(42), "40 + 2");
+    }
+
+    #[test]
+    fn third_test() {
         assert_eq!(expanded_form(70304), "70000 + 300 + 4");
+    }
+
+    #[test]
+    fn long_test() {
+        assert_eq!(expanded_form(90000304), "90000000 + 300 + 4");
+    }
+
+    #[test]
+    fn simple_test() {
+        assert_eq!(expanded_form(4), "4");
     }
 }
