@@ -2,9 +2,10 @@ fn spin_words(words: &str) -> String {
     words.split_whitespace()
         .map(|s| {
             if s.len() >= 5 {
-                return s.chars().rev().collect::<String>();
-            };
-            s.to_string()
+                s.chars().rev().collect::<String>()
+            } else {
+                s.to_string()
+            }
         })
         .collect::<Vec<String>>()
         .join(" ")

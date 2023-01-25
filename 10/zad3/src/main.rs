@@ -8,7 +8,7 @@ fn comp(a: Vec<i64>, b: Vec<i64>) -> bool {
             Some(index) => { a_copy.remove(index); },
             None => { return false; }
         } 
-     };
+    };
 
     true
 }
