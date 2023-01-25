@@ -4,3 +4,4 @@ Repo containing tasks solutions from Rust course at University of Wroclaw in fal
 
 Technologies covered:
 * Rust
+* WebAssembly (wasm)
